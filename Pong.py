@@ -1,6 +1,5 @@
 #!/usr/local/bin/python3
 
-import random
 import time
 from curses import wrapper
 
@@ -14,14 +13,17 @@ def start():
 def main(stdscr):
     stdscr.nodelay(True)
 
+    key_stroke = -1
+
     while True:
         draw_screen(stdscr)  # This is exchanged by GPIO control later on
 
-        field.nextCycle(stdscr.getch())
+        field.nextCycle(key_stroke)
 
         time.sleep(0.01)
 
-        if stdscr.getch() == ord('q'):
+        key_stroke = stdscr.getch()
+        if key_stroke == ord('q'):
             break
 
 
