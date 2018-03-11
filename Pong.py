@@ -17,7 +17,7 @@ def main(stdscr):
     while True:
         draw_screen(stdscr)  # This is exchanged by GPIO control later on
 
-        field.nextCycle()
+        field.nextCycle(stdscr.getch())
 
         time.sleep(0.01)
 

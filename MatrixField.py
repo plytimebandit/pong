@@ -1,4 +1,6 @@
+import HumanPlayer
 from Ball import Ball
+from HumanPlayer import HumanPlayer
 from Led import Led
 
 
@@ -10,6 +12,7 @@ class MatrixField:
         self.cycle = 0
 
         self.ball = Ball(size - 1)
+        self.humanPlayer = HumanPlayer(size / 2, size - 1)
 
         for i in range(0, size * size):
             self.ledList.append(Led())
@@ -34,11 +37,15 @@ class MatrixField:
 
         return self.ledList[self.size * row + col]
 
-    def nextCycle(self):
+    def nextCycle(self, keyStroke):
         cycle = self.cycle
 
         self.deactivate(self.ball.positionRow, self.ball.positionCol)
         self.ball.move(cycle)
         self.activate(self.ball.positionRow, self.ball.positionCol)
+
+        for pos in self.humanPlayer.positions: self.deactivate(pos, 0)
+        self.humanPlayer.move(cycle, keyStroke)
+        for pos in self.humanPlayer.positions: self.activate(pos, 0)
 
         self.cycle += 1

@@ -9,7 +9,8 @@ class Ball:
         self.positionCol = 4
         self.moveUp = True
         self.moveRight = True
-        self.cycleSpeed = 10  # If Pong sleeps 0.01 s then cycle speed of 100 means "move once in a second"
+        # If Pong sleeps 0.01 s then cycle speed of 100 means "move once in a second" (Smaller = faster)
+        self.cycleSpeed = 10
         self.randomAngle = 0
 
     def move(self, cycle):
@@ -44,7 +45,6 @@ class Ball:
         elif not self.moveUp:
             self.positionRow += (1 + self.get_random_angle())
 
-
     def get_random_angle(self):
         if 1 < self.positionRow < self.boundary-1:
             return self.randomAngle
@@ -53,5 +53,6 @@ class Ball:
     def set_random_angle(self):
         self.randomAngle = random.randint(0, 1)
 
-    def get_movement_direction(self):
+    @staticmethod
+    def get_movement_direction():
         return True if random.randint(0, 1) == 1 else False
