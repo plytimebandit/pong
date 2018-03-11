@@ -5,7 +5,7 @@ class HumanPlayer:
         self.cycleSpeed = 10
         self.cycleInterval = 0
         pos = int(startPosition - self.size / 2)
-        self.set_positions(pos)
+        self.positions = range(pos, pos + self.size)
 
         self.startPosition = startPosition
         self.boundary = boundary
@@ -21,9 +21,6 @@ class HumanPlayer:
         elif key_stroke == ord('s'):
             self.move_down()
             self.cycleInterval = 0
-
-    def set_positions(self, pos):
-        self.positions = range(pos, pos + self.size)
 
     def move_up(self):
         if self.positions[0] == 0:

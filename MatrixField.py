@@ -37,15 +37,18 @@ class MatrixField:
 
         return self.ledList[self.size * row + col]
 
-    def nextCycle(self, keyStroke):
+    def next_cycle(self, key_stroke):
         cycle = self.cycle
+
+        for led in list(filter(lambda led: led.isFlashed, self.ledList)):
+            led.deactivate()
 
         self.deactivate(self.ball.positionRow, self.ball.positionCol)
         self.ball.move(cycle)
         self.activate(self.ball.positionRow, self.ball.positionCol)
 
         for pos in self.humanPlayer.positions: self.deactivate(pos, 0)
-        self.humanPlayer.move(keyStroke)
+        self.humanPlayer.move(key_stroke)
         for pos in self.humanPlayer.positions: self.activate(pos, 0)
 
         self.check_result()
@@ -57,7 +60,7 @@ class MatrixField:
             return
 
         if self.ball.positionRow not in self.humanPlayer.positions:
-            self.invert_leds()
+            self.flash_leds()
 
     def invert_leds(self):
         for led in self.ledList:
@@ -65,3 +68,6 @@ class MatrixField:
                 led.deactivate()
             else:
                 led.activate()
+
+    def flash_leds(self):
+        for led in self.ledList: led.flash()
