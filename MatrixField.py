@@ -48,4 +48,20 @@ class MatrixField:
         self.humanPlayer.move(keyStroke)
         for pos in self.humanPlayer.positions: self.activate(pos, 0)
 
+        self.check_result()
+
         self.cycle += 1
+
+    def check_result(self):
+        if self.ball.positionCol != 0:
+            return
+
+        if self.ball.positionRow not in self.humanPlayer.positions:
+            self.invert_leds()
+
+    def invert_leds(self):
+        for led in self.ledList:
+            if led.isActive:
+                led.deactivate()
+            else:
+                led.activate()
