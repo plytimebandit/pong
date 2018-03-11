@@ -15,17 +15,11 @@ def main(stdscr):
     stdscr.nodelay(True)
 
     while True:
-        # row = random.randint(0, field.size - 1)
-        # col = random.randint(0, field.size - 1)
-        #
-        # field.deactivate_all()
-        # field.activate(row, col)
-
-        draw_screen(stdscr)
+        draw_screen(stdscr)  # This is exchanged by GPIO control later on
 
         field.nextCycle()
 
-        time.sleep(0.1)
+        time.sleep(0.01)
 
         if stdscr.getch() == ord('q'):
             break
@@ -34,11 +28,25 @@ def main(stdscr):
 def draw_screen(stdscr):
     stdscr.clear()
     counter = 0
+
+    stdscr.addstr("+")
+    stdscr.addstr("-" * field.size)
+    stdscr.addstr("+")
+    stdscr.addstr("\n")
+
     for led in field.ledList:
         if counter % field.size == 0:
-            stdscr.addstr("\n")
+            stdscr.addstr("|")
+        if counter >= field.size and counter % field.size == 0:
+            stdscr.addstr("\n|")
         stdscr.addstr("*" if led.isActive else " ")
         counter += 1
+
+    stdscr.addstr("|\n")
+    stdscr.addstr("+")
+    stdscr.addstr("-" * field.size)
+    stdscr.addstr("+\n")
+
     stdscr.refresh()
 
 
