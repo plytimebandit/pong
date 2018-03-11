@@ -10,7 +10,7 @@ class Ball:
         self.moveUp = True
         self.moveRight = True
         # If Pong sleeps 0.01 s then cycle speed of 100 means "move once in a second" (Smaller = faster)
-        self.cycleSpeed = 10
+        self.cycleSpeed = 20
         self.randomAngle = 0
 
     def move(self, cycle):

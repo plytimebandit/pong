@@ -45,7 +45,7 @@ class MatrixField:
         self.activate(self.ball.positionRow, self.ball.positionCol)
 
         for pos in self.humanPlayer.positions: self.deactivate(pos, 0)
-        self.humanPlayer.move(cycle, keyStroke)
+        self.humanPlayer.move(keyStroke)
         for pos in self.humanPlayer.positions: self.activate(pos, 0)
 
         self.cycle += 1
