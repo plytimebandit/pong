@@ -1,11 +1,11 @@
 # pong
-Command line pong game. The plan is to play the game on a dot matrix controlled by a Raspberry Pi.
+LED matrix pong game for the Raspberry Pi.
 
 Start the game by executing `./Pong.py`.
 
 The game is designed to be drawn on a 16x16 dot matrix controlled by a Raspberry Pi.
-Well, up to now it's just the half finished command line game. You control the racket on the left and you play against yourself.
-If the ball hits the left wall the fault gets indicated by flashing all LEDs but you can play forever. There are no lifes nor limits.
+You control the racket on the left by using tactile push switch and you play against yourself.
+If the ball hits the left wall it's a fault and it gets indicated by flashing all LEDs but you can play forever. There are no lifes nor limits.
 
 This is the incredible game design:
 ```
@@ -28,3 +28,6 @@ This is the incredible game design:
 |                |
 +----------------+
 ```
+
+\
+You can play the game also in bash without an LED matrix connected. Just run `./Pong_GUI.py` instead.
