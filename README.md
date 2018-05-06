@@ -31,3 +31,6 @@ This is the incredible game design:
 
 \
 You can play the game also in bash without an LED matrix connected. Just run `./Pong_GUI.py` instead.
+
+The implementation of the SPI interface is based on the implementation of Glenn K. Lockwood:
+https://github.com/glennklockwood/raspberrypi/blob/master/spi/spi.py
