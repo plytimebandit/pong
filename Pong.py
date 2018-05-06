@@ -1,59 +1,54 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python3
 
 import time
-from curses import wrapper
+import RPi.GPIO as GPIO
 
+from LEDControl import LEDControl
 from MatrixField import MatrixField
 
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+
 def start():
-    wrapper(main)
-
-
-def main(stdscr):
-    stdscr.nodelay(True)
-
-    key_stroke = -1
+    led_control = LEDControl()
 
     while True:
-        draw_screen(stdscr)  # This is exchanged by GPIO control later on
+        for n in range(len(field.ledList)):
+            # TODO very hard coded ...
+            row = int(n / 16)
+            col = int(n % 16)
+
+            field_col = col
+            field_row = row
+            if col < 8 and row >= 8:
+                field_col = col + 8
+                field_row = row - 8
+            if row < 8 and col >= 8:
+                field_col = col - 8
+                field_row = row + 8
+
+            led_control.set_led(row + 1,
+                                col + 1,
+                                led_control.SWITCH_ON if field.is_led_active(field_row, field_col) else led_control.SWITCH_OFF)
+        led_control.repaint()
+
+        key_stroke = -1
+        if not GPIO.input(17):
+            key_stroke = ord('w')
+        if not GPIO.input(22):
+            key_stroke = ord('s')
 
         field.next_cycle(key_stroke)
 
         time.sleep(0.01)
 
-        key_stroke = stdscr.getch()
-        if key_stroke == ord('q'):
-            break
-
-
-def draw_screen(stdscr):
-    stdscr.clear()
-    counter = 0
-
-    stdscr.addstr("+")
-    stdscr.addstr("-" * field.size)
-    stdscr.addstr("+")
-    stdscr.addstr("\n")
-
-    for led in field.ledList:
-        if counter % field.size == 0:
-            stdscr.addstr("|")
-        if counter >= field.size and counter % field.size == 0:
-            stdscr.addstr("\n|")
-        stdscr.addstr("*" if led.isActive else " ")
-        counter += 1
-
-    stdscr.addstr("|\n")
-    stdscr.addstr("+")
-    stdscr.addstr("-" * field.size)
-    stdscr.addstr("+\n")
-
-    stdscr.refresh()
-
 
 field = MatrixField(16)
 
-start()
-
-
+try:
+    start()
+except KeyboardInterrupt:
+    print("Game quit.")

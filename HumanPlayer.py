@@ -1,13 +1,13 @@
 class HumanPlayer:
 
-    def __init__(self, startPosition, boundary):
+    def __init__(self, start_position, boundary):
         self.size = 3
-        self.cycleSpeed = 10
+        self.cycleSpeed = 4
         self.cycleInterval = 0
-        pos = int(startPosition - self.size / 2)
+        pos = int(start_position - self.size / 2)
         self.positions = range(pos, pos + self.size)
 
-        self.startPosition = startPosition
+        self.startPosition = start_position
         self.boundary = boundary
 
     def move(self, key_stroke):

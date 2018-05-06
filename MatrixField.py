@@ -34,8 +34,13 @@ class MatrixField:
     def __get_led(self, row, col):
         if row >= self.size or col >= self.size:
             raise ValueError("'row' {} and 'col' {} must not be bigger or equals 'size' {}.".format(row, col, self.size))
+        if row < 0 or col < 0:
+            raise ValueError("'row' {} and 'col' {} must be bigger than 0".format(row, col, self.size))
 
         return self.ledList[self.size * row + col]
+
+    def is_led_active(self, row, col):
+        return self.__get_led(row, col).isActive
 
     def next_cycle(self, key_stroke):
         cycle = self.cycle

@@ -12,5 +12,5 @@ class Led:
         self.isFlashed = False
 
     def flash(self):
-        self.isActive = True
+        self.activate()
         self.isFlashed = True
